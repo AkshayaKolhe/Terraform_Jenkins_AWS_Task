@@ -7,7 +7,6 @@ pipeline {
     stages {
         stage('init') {
             steps {
-                	input message: 'Do you want to approve the init ?', ok: 'Approve'
                     sh 'terraform init -reconfigure -backend-config="bucket=bucket-for-tf-state-task-akshaya"'
             }
         }
@@ -16,8 +15,10 @@ pipeline {
                  script {
                     echo "Terraform action is --> ${action}"
                     if (action == 'apply' || action == 'destroy') {
+                        input message: "Do you want to approve the ${action} ?", ok: 'Approve'
                         sh "terraform ${action} --auto-approve"
                     } else {
+                        input message: "Do you want to approve the ${action} ?", ok: 'Approve'
                         sh "terraform ${action}"
                     }       
                 }
