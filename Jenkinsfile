@@ -12,6 +12,9 @@ pipeline {
     stages {
         stage('init') {
             steps {
+                        echo "${GITHUB_TOKEN_SCERET}"
+                        echo "${AWS_TOKEN_SCERET}"
+
                     sh 'terraform init -reconfigure -backend-config="bucket=bucket-for-tf-state-task-akshaya"'
             }
         }
