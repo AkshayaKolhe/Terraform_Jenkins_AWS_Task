@@ -7,6 +7,7 @@ pipeline {
     stages {
         stage('init') {
             steps {
+                	input message: 'Do you want to approve the init ?', ok: 'Yes'
                     sh 'terraform init -reconfigure -backend-config="bucket=bucket-for-tf-state-task-akshaya"'
             }
         }
