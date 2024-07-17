@@ -24,7 +24,7 @@ pipeline {
                         sh "terraform ${action} --auto-approve"
                     } else {
                         input message: "Do you want to approve the ${action} ?", ok: 'Approve'
-                        withCredentials([usernamePassword(credentialsId: 'AWS_TOKEN_SCERET', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+                        withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
                         sh "terraform ${action}"
                         echo "${GITHUB_TOKEN_SCERET}"
     }
