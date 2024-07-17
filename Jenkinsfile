@@ -1,9 +1,5 @@
 pipeline {
     agent any
-    environment {
-                aws_credentials = credentials('aws-credentials')      
-        AWS_REGION = 'ap-south-1' 
-    }
     tools {
         terraform 'terrafrom'
     }
@@ -24,7 +20,7 @@ pipeline {
                     } else {
                         input message: "Do you want to approve the ${action} ?", ok: 'Approve'
 
-                        withCredentials([string(credentialsId: 'aws_credentials', variable: 'secret')]) {
+                        withCredentials([string(credentialsId: 'aws-credentials', variable: 'secret')]) {
                         script {
                             def creds = readJSON text: secret
                             env.AWS_ACCESS_KEY_ID = creds['AWS_ACCESS_KEY_ID']
