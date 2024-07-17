@@ -23,13 +23,13 @@ resource "aws_autoscaling_group" "autoscaling_grp_task" {
 resource "aws_autoscaling_policy" "target_tracking_policy" {
   name                      = "target-tracking-policy"
   policy_type               = "TargetTrackingScaling"
-  estimated_instance_warmup = 200   #200 sec
+  estimated_instance_warmup = 200 #200 sec
   autoscaling_group_name    = aws_autoscaling_group.autoscaling_grp_task.name
 
   target_tracking_configuration {
     predefined_metric_specification {
       predefined_metric_type = "ASGAverageCPUUtilization"
     }
-    target_value = 2.0         #cpu utilization till 2
+    target_value = 2.0 #cpu utilization till 2
   }
 }

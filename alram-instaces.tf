@@ -5,7 +5,7 @@ resource "aws_cloudwatch_metric_alarm" "max_size_reached_alarm" {
   evaluation_periods  = 1
   metric_name         = "GroupInServiceInstances"
   namespace           = "AWS/AutoScaling"
-  period              = 30 
+  period              = 30
   statistic           = "Average"
   threshold           = 4
   alarm_description   = "Alarm when max size of 4 instances is reached"

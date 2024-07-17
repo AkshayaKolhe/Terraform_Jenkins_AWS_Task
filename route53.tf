@@ -29,13 +29,13 @@ resource "aws_route53_record" "india_geolocation_record_s3" {
   set_identifier = "Europe"
 
   geolocation_routing_policy {
-    continent = "EU" 
+    continent = "EU"
   }
 
   alias {
     name                   = "s3-website.ap-south-1.amazonaws.com"
     zone_id                = aws_s3_bucket.s3_website.hosted_zone_id
-    evaluate_target_health = false 
+    evaluate_target_health = false
   }
 }
 

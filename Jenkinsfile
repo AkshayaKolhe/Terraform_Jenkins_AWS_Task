@@ -3,7 +3,8 @@ pipeline {
     environment {
  AWS_ACCESS_KEY_ID = ''
         AWS_SECRET_ACCESS_KEY = ''
-        GITHUB_TOKEN = ''        AWS_REGION = 'ap-south-1' 
+        GITHUB_TOKEN = ''        
+        AWS_REGION = 'ap-south-1' 
     }
     tools {
         terraform 'terrafrom'
