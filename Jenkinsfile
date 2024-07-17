@@ -23,10 +23,19 @@ pipeline {
                         sh "terraform ${action} --auto-approve"
                     } else {
                         input message: "Do you want to approve the ${action} ?", ok: 'Approve'
-                            withCredentials([usernamePassword(credentialsId: 'aws_credentials', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
 
+                        withCredentials([string(credentialsId: 'aws_credentials', variable: 'secret')]) {
+                        script {
+                            def creds = readJSON text: secret
+                            env.AWS_ACCESS_KEY_ID = creds['AWS_ACCESS_KEY_ID']
+                            env.AWS_SECRET_ACCESS_KEY = creds['AWS_SECRET_ACCESS_KEY']
+                                                        env.GITHUB_TOKEN = creds['GITHUB_TOKEN']
+
+                            env.AWS_REGION = 'ap-south-1' 
+                        }
                             sh "terraform ${action}"
-                        }    
+                    }
+
                     }       
                 }
         }
