@@ -1,20 +1,32 @@
 pipeline {
     agent any
     environment {
-        GITHUB_TOKEN_SCERET = credentials('aws-jenkins-credentials')
-        AWS_TOKEN_SCERET = credentials('aws-credentials')
-        AWS_REGION = 'ap-south-1' 
+ AWS_ACCESS_KEY_ID = ''
+        AWS_SECRET_ACCESS_KEY = ''
+        GITHUB_TOKEN = ''        AWS_REGION = 'ap-south-1' 
     }
     tools {
         terraform 'terrafrom'
     }
 
     stages {
+        stage('Retrieve Secrets') {
+            steps {
+                script {
+                    // Retrieve secrets from AWS Secrets Manager and set them as environment variables
+                    def awsAccessKeyId = sh(script: "aws secretsmanager get-secret-value --secret-id YOUR_SECRET_ID --query 'SecretString' --output text | jq -r '.AWS_ACCESS_KEY_ID'", returnStdout: true).trim()
+                    def awsSecretAccessKey = sh(script: "aws secretsmanager get-secret-value --secret-id YOUR_SECRET_ID --query 'SecretString' --output text | jq -r '.AWS_SECRET_ACCESS_KEY'", returnStdout: true).trim()
+                    def githubToken = sh(script: "aws secretsmanager get-secret-value --secret-id YOUR_SECRET_ID --query 'SecretString' --output text | jq -r '.GITHUB_TOKEN'", returnStdout: true).trim()
+
+                    // Set environment variables
+                    env.AWS_ACCESS_KEY_ID = awsAccessKeyId
+                    env.AWS_SECRET_ACCESS_KEY = awsSecretAccessKey
+                    env.GITHUB_TOKEN = githubToken
+                }
+            }
+        }
         stage('init') {
             steps {
-                        echo "${GITHUB_TOKEN_SCERET}"
-                        echo "${AWS_TOKEN_SCERET}"
-
                     sh 'terraform init -reconfigure -backend-config="bucket=bucket-for-tf-state-task-akshaya"'
             }
         }
@@ -28,9 +40,9 @@ pipeline {
                     } else {
                         input message: "Do you want to approve the ${action} ?", ok: 'Approve'
                         withCredentials([usernamePassword(credentialsId: 'aws-credentials', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY')]) {
-                        sh "terraform ${action}"
-                        echo "${GITHUB_TOKEN_SCERET}"
-    }
+withCredentials([string(credentialsId: 'AWS_ACCESS_KEY_ID', variable: 'AWS_ACCESS_KEY_ID'), string(credentialsId: 'AWS_SECRET_ACCESS_KEY', variable: 'AWS_SECRET_ACCESS_KEY'),string(credentialsId: 'GITHUB_TOKEN', variable: 'GITHUB_TOKEN')]) {
+                            sh "terraform ${action}"
+                        }    }
                     }       
                 }
         }
