@@ -20,16 +20,16 @@ pipeline {
                     } else {
                         input message: "Do you want to approve the ${action} ?", ok: 'Approve'
 
-                        withCredentials([string(credentialsId: 'aws-credentials', variable: 'secret')]) {
+                          withCredentials([
+                            string(credentialsId: 'AWS_ACCESS_KEY_ID_cred', variable: 'AWS_ACCESS_KEY_ID'),
+                            string(credentialsId: 'AWS_SECRET_ACCESS_KEY_cred', variable: 'AWS_SECRET_ACCESS_KEY'),
+                            string(credentialsId: 'GITHUB_cred', variable: 'GITHUB_TOKEN')
+                        ]) {
                         script {
-                            def creds = readJSON text: secret
-                            env.AWS_ACCESS_KEY_ID = creds['AWS_ACCESS_KEY_ID']
-                            env.AWS_SECRET_ACCESS_KEY = creds['AWS_SECRET_ACCESS_KEY']
-                                                        env.GITHUB_TOKEN = creds['GITHUB_TOKEN']
-
                             env.AWS_REGION = 'ap-south-1' 
-                        }
                             sh "terraform ${action}"
+
+                        }
                     }
 
                     }       
