@@ -13,15 +13,13 @@ pipeline {
     }
 
     stages {
-        stage('tfsec') {
-            agent {
-                docker { 
-                    image 'tfsec/tfsec-ci:v0.57.1' 
-                    reuseNode true
-                }
-            }
+      stage('Run tfsec in Docker') {
             steps {
-                echo "tf sec sucess"
+                script {
+                    docker.image('aquasec/tfsec').inside {
+                        sh 'tfsec .'
+                    }
+                }
             }
         }
 
