@@ -16,7 +16,8 @@ pipeline {
       stage('Run tfsec in Docker') {
             steps {
                 script {
-                    docker.image('aquasec/tfsec').inside {
+                    docker.image('aquasec/tfsec').inside("--entrypoint=''")
+                     {
                         sh 'tfsec .'
                     }
                 }
