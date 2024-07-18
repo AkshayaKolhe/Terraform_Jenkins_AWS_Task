@@ -11,7 +11,7 @@ pipeline {
         AWS_REGION = 'ap-south-1'
     }
     parameters {
-        choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Choose the Terraform action to perform')
+        choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Choose the Terraform action to perform',defaultValue: 'plan')
     }
 
     stages {
