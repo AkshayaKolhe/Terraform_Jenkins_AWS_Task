@@ -24,6 +24,7 @@ pipeline {
         stage('Action') {
             steps {
                 script {
+                    def action = params.ACTION ?: 'plan'
                     echo "Terraform action is --> ${action}"
                     if (action == 'apply' || action == 'destroy') {
                         input message: "Do you want to approve the ${action}?", ok: 'Approve'
