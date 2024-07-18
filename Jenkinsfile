@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        terraform 'terrafrom'
-    }
 
     environment {
         AWS_ACCESS_KEY_ID = credentials("AWS_ACCESS_KEY_ID_cred")
@@ -10,10 +7,10 @@ pipeline {
         GITHUB_TOKEN = credentials("GITHUB_cred")
         AWS_REGION = 'ap-south-1'
     }
+
     parameters {
         choice(name: 'ACTION', choices: ['plan', 'apply', 'destroy'], description: 'Choose the Terraform action to perform')
     }
-
 
     stages {
         stage('tfsec') {
@@ -23,12 +20,17 @@ pipeline {
                     reuseNode true
                 }
             }
+            steps {
+                echo "tf sec sucess"
+            }
         }
+
         stage('init') {
             steps {
                 sh 'terraform init -reconfigure -backend-config="bucket=bucket-for-tf-state-task-akshaya"'
             }
         }
+
         stage('Action') {
             steps {
                 script {
@@ -46,6 +48,7 @@ pipeline {
         }
     }
 }
+
 
 // pipeline {
 //     agent any
