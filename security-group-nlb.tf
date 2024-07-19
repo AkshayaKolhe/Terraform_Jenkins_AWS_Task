@@ -16,6 +16,7 @@ resource "aws_security_group" "allow_inbound_rules_nlb" {
   }
 
   egress {
+    description = "allow all outbound traffic"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
