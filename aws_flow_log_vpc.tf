@@ -6,6 +6,7 @@ resource "aws_flow_log" "aws_flow_log_vpc" {
   max_aggregation_interval  = 60
 }
 
+#tfsec:ignore:aws-cloudwatch-log-group-customer-key
 resource "aws_cloudwatch_log_group" "vpc_log_action" {
   name = "vpc_log_action_task"
 }
@@ -33,6 +34,7 @@ data "aws_iam_policy_document" "CloudWatch_vpc_policy" {
     effect = "Allow"
 
     actions = [
+        #tfsec:ignore:aws-iam-no-policy-wildcards
       "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",

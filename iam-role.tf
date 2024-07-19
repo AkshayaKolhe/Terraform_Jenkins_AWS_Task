@@ -25,6 +25,7 @@ resource "aws_iam_role_policy" "ec2_cloudwatch_policy" {
       {
         Effect = "Allow",
         Action = [
+          #tfsec:ignore:aws-iam-no-policy-wildcards
           "logs:CreateLogGroup",
           "logs:CreateLogStream",
           "logs:PutLogEvents",

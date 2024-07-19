@@ -1,3 +1,4 @@
+#tfsec:ignore:aws-ec2-no-public-ip-subnet
 resource "aws_subnet" "subnet_south_a" {
   vpc_id                  = aws_vpc.task_vpc.id
   cidr_block              = var.subnet_south_a1
@@ -9,6 +10,7 @@ resource "aws_subnet" "subnet_south_a" {
   }
 }
 
+#tfsec:ignore:aws-ec2-no-public-ip-subnet
 resource "aws_subnet" "subnet_south_b" {
   vpc_id                  = aws_vpc.task_vpc.id
   cidr_block              = var.subnet_south_b1

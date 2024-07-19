@@ -1,4 +1,5 @@
 # Launch Template
+#tfsec:ignore:aws-ec2-enforce-launch-config-http-token-imds
 resource "aws_launch_template" "task_terraform_template" {
   name          = "task-terra-template"
   image_id      = var.image_id

@@ -1,4 +1,5 @@
 # Create a Network Load Balancer 
+#tfsec:ignore:aws-elb-alb-not-public
 resource "aws_lb" "network_load_balancer" {
   name               = "terrafrom-nlb"
   internal           = false

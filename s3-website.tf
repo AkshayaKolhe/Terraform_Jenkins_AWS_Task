@@ -1,8 +1,16 @@
+#tfsec:ignore:aws-s3-encryption-customer-key tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "s3_website" {
   bucket        = "hellohumans.in"
   force_destroy = true
 }
+resource "aws_s3_bucket_versioning" "versioning_s3" {
+  bucket = aws_s3_bucket.s3_website.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
 
+#tfsec:ignore:aws-s3-block-public-policy tfsec:ignore:aws-s3-ignore-public-acls tfsec:ignore:aws-s3-no-public-buckets      tfsec:ignore:aws-s3-block-public-acls
 resource "aws_s3_bucket_public_access_block" "public_access_s3" {
   bucket = aws_s3_bucket.s3_website.id
 

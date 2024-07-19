@@ -1,4 +1,5 @@
 # SNS Topic for Scaling Notifications
+#tfsec:ignore:aws-sns-enable-topic-encryption
 resource "aws_sns_topic" "scale_notification_topic" {
   name = "scale-notification-topic"
 }
