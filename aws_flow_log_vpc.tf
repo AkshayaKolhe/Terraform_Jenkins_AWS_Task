@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "assume_role_vpc_action_flow" {
 
 resource "aws_iam_role" "vpc_flow_role" {
   name               = "vpc_flow_role_task"
-  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+  assume_role_policy = data.aws_iam_policy_document.assume_role_vpc_action_flow.json
 }
 
 #tfsec:ignore:aws-iam-no-policy-wildcards
