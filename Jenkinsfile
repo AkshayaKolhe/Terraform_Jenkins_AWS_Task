@@ -13,16 +13,16 @@ pipeline {
     }
 
     stages {
-    //   stage('Run tfsec in Docker') {
-    //         steps {
-    //             script {
-    //                 docker.image('aquasec/tfsec').inside("--entrypoint=''")
-    //                  {
-    //                     sh 'tfsec .'
-    //                 }
-    //             }
-    //         }
-    //     }
+      stage('Run tfsec in Docker') {
+            steps {
+                script {
+                    docker.image('aquasec/tfsec').inside("--entrypoint=''")
+                     {
+                        sh 'tfsec .'
+                    }
+                }
+            }
+        }
 
         stage('init') {
             steps {
