@@ -25,4 +25,9 @@ default_cache_behavior {
         viewer_protocol_policy = "redirect-to-https"
 
 }
+restrictions {
+    geo_restriction {
+      restriction_type = "none"
+    }
+  }
 }
