@@ -19,5 +19,8 @@ default_cache_behavior {
     allowed_methods  = ["GET", "HEAD"]
     cached_methods   = ["GET", "HEAD"]
     target_origin_id = "nlb-origin"
+
+        viewer_protocol_policy = "redirect-to-https"
+
 }
 }
