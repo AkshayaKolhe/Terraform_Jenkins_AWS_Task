@@ -2,7 +2,7 @@ resource "aws_route53_zone" "domain_name" {
   name = "hellohumans.in"
 }
 
-# Create Route 53 record with geolocation routing policy for nlb
+# Create Route 53 record with geolocation routing policy for cloudfront
 resource "aws_route53_record" "india_geolocation_record" {
   zone_id        = aws_route53_zone.domain_name.zone_id
   name           = "hellohumans.in"
@@ -10,12 +10,11 @@ resource "aws_route53_record" "india_geolocation_record" {
   set_identifier = "india"
   geolocation_routing_policy {
     continent = "AS" # Asia
-
   }
 
   alias {
-    name                   = aws_lb.network_load_balancer.dns_name
-    zone_id                = aws_lb.network_load_balancer.zone_id
+    name                   = aws_cloudfront_distribution.cloudfront.dns_name
+    zone_id                = aws_cloudfront_distribution.cloudfront.zone_id
     evaluate_target_health = true
 
   }
