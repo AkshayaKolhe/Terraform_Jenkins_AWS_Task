@@ -13,7 +13,7 @@ resource "aws_route53_record" "india_geolocation_record" {
   }
 
   alias {
-    name                   = aws_cloudfront_distribution.cloudfront.dns_name
+    name                   = aws_cloudfront_distribution.cloudfront.domain_name
     zone_id                = "Z2FDTNDATAQYW2"
     evaluate_target_health = true
 
