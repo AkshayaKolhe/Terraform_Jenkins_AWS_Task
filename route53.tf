@@ -3,22 +3,22 @@ resource "aws_route53_zone" "domain_name" {
 }
 
 # Create Route 53 record with geolocation routing policy for cloudfront
-resource "aws_route53_record" "india_geolocation_record" {
-  zone_id        = aws_route53_zone.domain_name.zone_id
-  name           = "hellohumans.in"
-  type           = "A"
-  set_identifier = "india"
-  geolocation_routing_policy {
-    continent = "AS" # Asia
-  }
+# resource "aws_route53_record" "india_geolocation_record" {
+#   zone_id        = aws_route53_zone.domain_name.zone_id
+#   name           = "hellohumans.in"
+#   type           = "A"
+#   set_identifier = "india"
+#   geolocation_routing_policy {
+#     continent = "AS" # Asia
+#   }
 
-  alias {
-    name                   = aws_cloudfront_distribution.cloudfront.domain_name
-    zone_id                = "Z2FDTNDATAQYW2"
-    evaluate_target_health = true
+#   alias {
+#     name                   = aws_cloudfront_distribution.cloudfront.domain_name
+#     zone_id                = "Z2FDTNDATAQYW2"
+#     evaluate_target_health = true
 
-  }
-}
+#   }
+# }
 
 # Create Route 53 record with geolocation routing policy for s3
 resource "aws_route53_record" "india_geolocation_record_s3" {
